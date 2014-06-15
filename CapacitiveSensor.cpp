@@ -1,7 +1,10 @@
 /*
  CapacitiveSense.h v.04 - Capacitive Sensing Library for 'duino / Wiring
+ https://github.com/PaulStoffregen/CapacitiveSensor
+ http://www.pjrc.com/teensy/td_libs_CapacitiveSensor.html
+ http://playground.arduino.cc/Main/CapacitiveSensor
  Copyright (c) 2009 Paul Bagder  All right reserved.
- Version 05 by Paul Stoffregen - Support Teensy 3.0, 3.1
+ Version 05 by Paul Stoffregen - Support non-AVR board: Teensy 3.x, Arduino Due
  Version 04 by Paul Stoffregen - Arduino 1.0 compatibility, issue 146 fix
  vim: set ts=4:
  */
