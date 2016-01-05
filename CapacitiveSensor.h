@@ -87,6 +87,7 @@
 #define DIRECT_WRITE_HIGH(base, mask)   ((*(base+1)) = (mask))              //GPIO_OUT_W1TS_ADDRESS
 
 #elif defined(__SAMD21G18A__)
+// runs extremely slow/unreliable on Arduino Zero - help wanted....
 #define PIN_TO_BASEREG(pin)             portModeRegister(digitalPinToPort(pin))
 #define PIN_TO_BITMASK(pin)             (digitalPinToBitMask(pin))
 #define IO_REG_TYPE uint32_t
