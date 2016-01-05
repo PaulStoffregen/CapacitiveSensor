@@ -75,6 +75,17 @@
 #define DIRECT_WRITE_LOW(base, mask)    ((*(base+2)) = (mask))              //GPIO_OUT_W1TC_ADDRESS
 #define DIRECT_WRITE_HIGH(base, mask)   ((*(base+1)) = (mask))              //GPIO_OUT_W1TS_ADDRESS
 
+#elif defined(__SAMD21G18A__)
+#define PIN_TO_BASEREG(pin)             portModeRegister(digitalPinToPort(pin))
+#define PIN_TO_BITMASK(pin)             (digitalPinToBitMask(pin))
+#define IO_REG_TYPE uint32_t
+#define IO_REG_ASM
+#define DIRECT_READ(base, mask)         (((*((base)+8)) & (mask)) ? 1 : 0)
+#define DIRECT_MODE_INPUT(base, mask)   ((*((base)+1)) = (mask))
+#define DIRECT_MODE_OUTPUT(base, mask)  ((*((base)+2)) = (mask))
+#define DIRECT_WRITE_LOW(base, mask)    ((*((base)+5)) = (mask))
+#define DIRECT_WRITE_HIGH(base, mask)   ((*((base)+6)) = (mask))
+
 #elif defined(__arc__)
 
 #include "scss_registers.h"

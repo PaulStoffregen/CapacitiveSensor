@@ -46,10 +46,10 @@ CapacitiveSensor::CapacitiveSensor(uint8_t sendPin, uint8_t receivePin)
 	pinMode(receivePin, INPUT);						// receivePin to INPUT
 	digitalWrite(sendPin, LOW);
 
-	sBit =  PIN_TO_BITMASK(sendPin);			// get send pin's ports and bitmask
+	sBit = PIN_TO_BITMASK(sendPin);					// get send pin's ports and bitmask
 	sReg = PIN_TO_BASEREG(sendPin);					// get pointer to output register
 
-	rBit = PIN_TO_BITMASK(receivePin);			// get receive pin's ports and bitmask
+	rBit = PIN_TO_BITMASK(receivePin);				// get receive pin's ports and bitmask
 	rReg = PIN_TO_BASEREG(receivePin);
 
 	// get pin mapping and port for receive Pin - from digital pin functions in Wiring.c
