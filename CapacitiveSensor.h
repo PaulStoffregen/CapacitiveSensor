@@ -214,6 +214,11 @@ void directWriteHigh(volatile IO_REG_TYPE *base, IO_REG_TYPE pin)
 #define FIVE_VOLT_TOLERANCE_WORKAROUND
 #endif
 
+
+#define UP 1
+#define DOWN 2
+#define BOTH (UP | DOWN)
+
 // library interface description
 class CapacitiveSensor
 {
@@ -221,8 +226,8 @@ class CapacitiveSensor
   public:
   // methods
 	CapacitiveSensor(uint8_t sendPin, uint8_t receivePin);
-	long capacitiveSensorRaw(uint8_t samples);
-	long capacitiveSensor(uint8_t samples);
+	long capacitiveSensorRaw(uint8_t samples, char dir = BOTH);
+	long capacitiveSensor(uint8_t samples, char dir = BOTH);
 	void set_CS_Timeout_Millis(unsigned long timeout_millis);
 	void reset_CS_AutoCal();
 	void set_CS_AutocaL_Millis(unsigned long autoCal_millis);
@@ -241,7 +246,7 @@ class CapacitiveSensor
 	IO_REG_TYPE rBit;    // receive pin's ports and bitmask
 	volatile IO_REG_TYPE *rReg;
   // methods
-	int SenseOneCycle(void);
+	int SenseOneCycle(char dir);
 };
 
 #endif
