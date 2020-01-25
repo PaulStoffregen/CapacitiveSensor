@@ -341,6 +341,17 @@ void directWriteHigh(volatile IO_REG_TYPE *base, IO_REG_TYPE pin)
 #define DIRECT_WRITE_LOW(base, pin)     digitalWrite(pin, LOW)
 #define DIRECT_WRITE_HIGH(base, pin)    digitalWrite(pin, HIGH)
 
+#elif defined(ARDUINO_ARCH_APOLLO3)
+#define PIN_TO_BASEREG(pin) (0)
+#define PIN_TO_BITMASK(pin) (pin)
+#define IO_REG_TYPE uint32_t
+#define IO_REG_ASM
+#define DIRECT_READ(base, mask) (am_hal_gpio_input_read(mask))
+#define DIRECT_MODE_INPUT(base, mask) (am_hal_gpio_pinconfig(mask, g_AM_HAL_GPIO_INPUT))
+#define DIRECT_MODE_OUTPUT(base, mask) (am_hal_gpio_pinconfig(mask, g_AM_HAL_GPIO_OUTPUT))
+#define DIRECT_WRITE_LOW(base, mask) (am_hal_gpio_output_clear(mask))
+#define DIRECT_WRITE_HIGH(base, mask) (am_hal_gpio_output_set(mask))
+
 #endif
 
 // some 3.3V chips with 5V tolerant pins need this workaround
