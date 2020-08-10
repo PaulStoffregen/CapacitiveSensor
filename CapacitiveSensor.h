@@ -248,6 +248,16 @@ void directModeOutput(IO_REG_TYPE pin)
 #define DIRECT_WRITE_HIGH(base, mask)   ((*((base)+6)) = (mask)) /// OUTSET
 
 #elif defined(ARDUINO_NRF52_ADAFRUIT) || defined(ARDUINO_ARCH_NRF52840)
+
+/* 
+Required for the Arduino Nano 33 BLE Sense to satisfy the compiler
+as build.f_cpu is not defined in the boards.txt file.
+The concept of F_CPU doesn't fully apply as mbed RTOS is used which uses preemption.
+*/
+#if defined(ARDUINO_ARCH_NRF52840) && !defined(F_CPU)
+#define F_CPU 64000000L
+#endif
+
 #define PIN_TO_BASEREG(pin)             (0)
 #define PIN_TO_BITMASK(pin)             digitalPinToPinName(pin)
 #define IO_REG_TYPE uint32_t
