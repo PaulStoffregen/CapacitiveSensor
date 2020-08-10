@@ -247,7 +247,7 @@ void directModeOutput(IO_REG_TYPE pin)
 #define DIRECT_WRITE_LOW(base, mask)    ((*((base)+5)) = (mask)) // OUTCLR
 #define DIRECT_WRITE_HIGH(base, mask)   ((*((base)+6)) = (mask)) /// OUTSET
 
-#elif defined(ARDUINO_NRF52_ADAFRUIT)
+#elif defined(ARDUINO_NRF52_ADAFRUIT) || defined(ARDUINO_ARCH_NRF52840)
 #define PIN_TO_BASEREG(pin)             (0)
 #define PIN_TO_BITMASK(pin)             digitalPinToPinName(pin)
 #define IO_REG_TYPE uint32_t
