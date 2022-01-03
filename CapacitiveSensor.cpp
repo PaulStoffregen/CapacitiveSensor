@@ -166,7 +166,9 @@ int CapacitiveSensor::SenseOneCycle(char dir)
   if (dir & UP){
     noInterrupts();
   	DIRECT_WRITE_LOW(sReg, sBit);	// sendPin Register low
+#if USE_INPUT_PULLUP_FOR_HALF_CYCLE
   	DIRECT_MODE_INPUT(rReg, rBit);	// receivePin to input (pullups are off)
+#endif /* USE_INPUT_PULLUP_FOR_HALF_CYCLE */
   	DIRECT_MODE_OUTPUT(rReg, rBit); // receivePin to OUTPUT
   	DIRECT_WRITE_LOW(rReg, rBit);	// pin is now LOW AND OUTPUT
   	delayMicroseconds(10);
@@ -189,7 +191,9 @@ int CapacitiveSensor::SenseOneCycle(char dir)
     unsigned long total1 = total;
   	// set receive pin HIGH briefly to charge up fully - because the while loop above will exit when pin is ~ 2.5V
       noInterrupts();
+#if USE_INPUT_PULLUP_FOR_HALF_CYCLE
   	DIRECT_WRITE_HIGH(rReg, rBit);
+#endif /* USE_INPUT_PULLUP_FOR_HALF_CYCLE */
   	DIRECT_MODE_OUTPUT(rReg, rBit);  // receivePin to OUTPUT - pin is now HIGH AND OUTPUT
   	DIRECT_WRITE_HIGH(rReg, rBit);
   	DIRECT_MODE_INPUT(rReg, rBit);	// receivePin to INPUT (pullup is off)
