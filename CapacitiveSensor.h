@@ -412,7 +412,7 @@ class CapacitiveSensor
 	CapacitiveSensor(uint8_t sendPin, uint8_t receivePin);
 	long capacitiveSensorRaw(uint8_t samples);
 	long capacitiveSensor(uint8_t samples);
-	void set_CS_Timeout_Millis(unsigned long timeout_millis);
+	void set_CS_Timeout_Millis(long timeout_millis);
 	void reset_CS_AutoCal();
 	void set_CS_AutocaL_Millis(unsigned long autoCal_millis);
   // library-accessible "private" interface
@@ -420,7 +420,7 @@ class CapacitiveSensor
   // variables
 	int error;
 	unsigned long  leastTotal;
-	unsigned int   loopTimingFactor;
+	long   loopTimingFactor;
 	unsigned long  CS_Timeout_Millis;
 	unsigned long  CS_AutocaL_Millis;
 	unsigned long  lastCal;
