@@ -154,13 +154,12 @@ void CapacitiveSensor::set_CS_Timeout_Millis(unsigned long timeout_millis){
 int CapacitiveSensor::SenseOneCycle(void)
 {
     noInterrupts();
-	DIRECT_WRITE_LOW(sReg, sBit);	// sendPin Register low
-	DIRECT_MODE_INPUT(rReg, rBit);	// receivePin to input (pullups are off)
-	DIRECT_MODE_OUTPUT(rReg, rBit); // receivePin to OUTPUT
-	DIRECT_WRITE_LOW(rReg, rBit);	// pin is now LOW AND OUTPUT
+	DIRECT_WRITE_LOW(rReg, rBit);	 // turn off input pullup
+	DIRECT_MODE_OUTPUT(rReg, rBit);  // receive Pin to OUTPUT
+	DIRECT_WRITE_LOW(rReg, rBit);	 // receive pin is now LOW AND OUTPUT
 	delayMicroseconds(10);
-	DIRECT_MODE_INPUT(rReg, rBit);	// receivePin to input (pullups are off)
-	DIRECT_WRITE_HIGH(sReg, sBit);	// sendPin High
+	DIRECT_MODE_INPUT(rReg, rBit);	 // receivePin to input (pullup is off)
+	DIRECT_WRITE_HIGH(sReg, sBit);	 // sendPin High
     interrupts();
 
 	while ( !DIRECT_READ(rReg, rBit) && (total < CS_Timeout_Millis) ) {  // while receive pin is LOW AND total is positive value
@@ -175,11 +174,10 @@ int CapacitiveSensor::SenseOneCycle(void)
 
 	// set receive pin HIGH briefly to charge up fully - because the while loop above will exit when pin is ~ 2.5V
     noInterrupts();
-	DIRECT_WRITE_HIGH(rReg, rBit);
-	DIRECT_MODE_OUTPUT(rReg, rBit);  // receivePin to OUTPUT - pin is now HIGH AND OUTPUT
-	DIRECT_WRITE_HIGH(rReg, rBit);
-	DIRECT_MODE_INPUT(rReg, rBit);	// receivePin to INPUT (pullup is off)
-	DIRECT_WRITE_LOW(sReg, sBit);	// sendPin LOW
+	DIRECT_MODE_OUTPUT(rReg, rBit);  // receivePin to OUTPUT
+	DIRECT_WRITE_HIGH(rReg, rBit);	 // receive pin is now HIGH AND OUTPUT
+	DIRECT_MODE_INPUT(rReg, rBit);	 // receivePin to INPUT (pullup is off)
+	DIRECT_WRITE_LOW(sReg, sBit);	 // sendPin LOW
     interrupts();
 
 #ifdef FIVE_VOLT_TOLERANCE_WORKAROUND
