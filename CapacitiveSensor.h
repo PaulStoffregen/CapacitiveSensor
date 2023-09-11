@@ -39,6 +39,16 @@
 // Direct I/O through registers and bitmask (from OneWire library)
 
 #if defined(__AVR__)
+#if defined(ARDUINO_AVR_NANO_EVERY)
+#define PIN_TO_BASEREG(pin)             (portInputRegister(digitalPinToPort(pin)))
+#define PIN_TO_BITMASK(pin)             (digitalPinToBitMask(pin))
+#define IO_REG_TYPE uint8_t
+#define DIRECT_READ(base, mask)         (((*(base)) & (mask)) ? 1 : 0)
+#define DIRECT_MODE_INPUT(base, mask)   ((*((base)-8)) &= ~(mask), (*((base)-4)) &= ~(mask))
+#define DIRECT_MODE_OUTPUT(base, mask)  ((*((base)-8)) |= (mask))
+#define DIRECT_WRITE_LOW(base, mask)    ((*((base)-4)) &= ~(mask))
+#define DIRECT_WRITE_HIGH(base, mask)   ((*((base)-4)) |= (mask))
+#else
 #define PIN_TO_BASEREG(pin)             (portInputRegister(digitalPinToPort(pin)))
 #define PIN_TO_BITMASK(pin)             (digitalPinToBitMask(pin))
 #define IO_REG_TYPE uint8_t
@@ -47,6 +57,7 @@
 #define DIRECT_MODE_OUTPUT(base, mask)  ((*((base)+1)) |= (mask))
 #define DIRECT_WRITE_LOW(base, mask)    ((*((base)+2)) &= ~(mask))
 #define DIRECT_WRITE_HIGH(base, mask)   ((*((base)+2)) |= (mask))
+#endif // ARDUINO_AVR_NANO_EVERY
 
 #elif defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MK66FX1M0__) || defined(__MK64FX512__)
 #define PIN_TO_BASEREG(pin)             (portOutputRegister(pin))
